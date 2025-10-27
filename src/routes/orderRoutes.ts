@@ -21,7 +21,7 @@ router.post("/", authMiddleware, async (req: Request, res: Response): Promise<vo
  * 🔵 READ all orders (with optional pagination)
  * GET /api/orders?page=1&pageSize=10
  */
-router.get("/", async (req: Request, res: Response): Promise<void> => {
+router.get("/",authMiddleware, async (req: Request, res: Response): Promise<void> => {
   try {
     const page = parseInt(req.query.page as string) || 1;
     const pageSize = parseInt(req.query.pageSize as string) || 10;
@@ -47,7 +47,7 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
  * 🟣 READ single order by ID
  * GET /api/orders/:id
  */
-router.get("/:id", async (req: Request, res: Response): Promise<void> => {
+router.get("/:id",authMiddleware, async (req: Request, res: Response): Promise<void> => {
   try {
     const order = await Order.findById(req.params.id).populate("customer");
     if (!order) {
@@ -64,7 +64,7 @@ router.get("/:id", async (req: Request, res: Response): Promise<void> => {
  * 🟠 UPDATE an order
  * PUT /api/orders/:id
  */
-router.put("/:id", async (req: Request, res: Response): Promise<void> => {
+router.put("/:id",authMiddleware, async (req: Request, res: Response): Promise<void> => {
   try {
     const updated = await Order.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -84,7 +84,7 @@ router.put("/:id", async (req: Request, res: Response): Promise<void> => {
  * 🔴 DELETE an order
  * DELETE /api/orders/:id
  */
-router.delete("/:id", async (req: Request, res: Response): Promise<void> => {
+router.delete("/:id",authMiddleware, async (req: Request, res: Response): Promise<void> => {
   try {
     const deleted = await Order.findByIdAndDelete(req.params.id);
     if (!deleted) {
