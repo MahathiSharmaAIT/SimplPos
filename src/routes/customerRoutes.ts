@@ -15,7 +15,7 @@ router.post("/", authMiddleware, async (req: Request, res: Response): Promise<vo
 });
 
 // 📋 Get all customers (with pagination)
-router.get("/", async (req: Request, res: Response): Promise<void> => {
+router.get("/",authMiddleware, async (req: Request, res: Response): Promise<void> => {
   try {
     const page = parseInt(req.query.page as string) || 1;
     const pageSize = parseInt(req.query.pageSize as string) || 10;
@@ -34,7 +34,7 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
 });
 
 // 🧾 Get single customer
-router.get("/:id", async (req: Request, res: Response): Promise<void> => {
+router.get("/:id",authMiddleware, async (req: Request, res: Response): Promise<void> => {
   try {
     const customer = await Customer.findById(req.params.id);
     if (!customer) {
@@ -48,7 +48,7 @@ router.get("/:id", async (req: Request, res: Response): Promise<void> => {
 });
 
 // ✏️ Update customer
-router.put("/:id", async (req: Request, res: Response): Promise<void> => {
+router.put("/:id",authMiddleware, async (req: Request, res: Response): Promise<void> => {
   try {
     const updated = await Customer.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -60,7 +60,7 @@ router.put("/:id", async (req: Request, res: Response): Promise<void> => {
 });
 
 // ❌ Delete customer
-router.delete("/:id", async (req: Request, res: Response): Promise<void> => {
+router.delete("/:id",authMiddleware, async (req: Request, res: Response): Promise<void> => {
   try {
     await Customer.findByIdAndDelete(req.params.id);
     res.json({ data: "Customer deleted successfully" });

@@ -6,8 +6,8 @@ const customerSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      unique: true, // ensures customer names are unique
-      index: true,  // adds index for faster search
+      unique: true, 
+      index: true,  
     },
     email: {
       type: String,

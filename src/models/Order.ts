@@ -4,7 +4,7 @@ const orderSchema = new mongoose.Schema(
   {
     customer: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Customer", // references the Customer collection
+      ref: "Customer", 
       required: true,
     },
     orderNumber: {
